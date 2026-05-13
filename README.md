@@ -30,10 +30,10 @@ This preserves GPEN's texture enhancement while preventing geometric hallucinati
 
 ### B. Face Tracking
 
-| Tracker | Method | Latency | Best For |
-|---------|--------|---------|----------|
-| **Kalman + MOSSE** | MOSSE correlation filter + Kalman smoothing | ~1ms | Stable, slow-to-moderate movement |
-| **Optical Flow** | Lucas-Kanade sparse flow on corner features | ~2–3ms | Fast lateral head movement |
+| Tracker | Method | Best For |
+|---------|--------|----------|
+| **Kalman + MOSSE** | MOSSE correlation filter + Kalman smoothing | Stable, slow-to-moderate movement |
+| **Optical Flow** | Lucas-Kanade sparse flow on corner features | Fast lateral head movement |
 
 Both trackers follow the same pattern:
 - **Detection frames** (every N frames): run Haar cascade, reinitialize tracker state
