@@ -4,15 +4,15 @@ Real-time face restoration for degraded video streams using GPEN-256, with landm
 
 ## Motivation
 
-Video calls over low-bandwidth connections suffer from heavy compression artifacts — blocky skin, blurred edges, and lost facial detail. Neural face restoration models like GPEN can recover impressive detail, but naively applying them in real-time introduces two critical problems:
+Video calls over low-bandwidth connections suffer from heavy compression artifacts blocky skin, blurred edges, and lost facial detail. Neural face restoration models like GPEN can recover impressive detail, but naively applying them in real-time introduces two critical problems:
 
 ### Problem A: Geometric Distortion
 
-GPEN-256 tends to **distort facial geometry** during restoration — edges of facial features jitter frame-to-frame, producing unstable, flickering output. This is especially severe when the subject **wears glasses**: the model hallucinates eye shapes behind the frames, causing erratic warping and unnatural results.
+GPEN-256 tends to **distort facial geometry** during restoration edges of facial features jitter frame-to-frame, producing unstable, flickering output. This is especially severe when the subject **wears glasses**.
 
 ### Problem B: Tracking Latency
 
-GPEN inference takes ~30–50ms per frame on CPU. During this time, if the user moves their head quickly, the face ROI (Region of Interest) from the previous detection is already stale. The restored face gets pasted at the wrong position, creating a visible "ghost face" lag effect.
+GPEN inference takes ~30–50ms per frame on CPU. During this time, if the user moves their head quickly, the face ROI from the previous detection is already stale. The restored face gets pasted at the wrong position, creating a visible "ghost face" lag effect.
 
 ## Solution
 
