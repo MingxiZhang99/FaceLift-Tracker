@@ -8,7 +8,7 @@ Video calls over low-bandwidth connections suffer from heavy compression artifac
 
 ### Problem A: Geometric Distortion
 
-GPEN-256 tends to **distort facial geometry** during restoration. It enlarges eyes, shifts nose position, and warps mouth shape. This is especially severe and unstable when the subject **wears glasses** — the model hallucinates eye shapes behind the frames, causing flickering and unnatural results.
+GPEN-256 tends to **distort facial geometry** during restoration — edges of facial features jitter frame-to-frame, producing unstable, flickering output. This is especially severe when the subject **wears glasses**: the model hallucinates eye shapes behind the frames, causing erratic warping and unnatural results.
 
 ### Problem B: Tracking Latency
 
@@ -18,7 +18,7 @@ GPEN inference takes ~30–50ms per frame on CPU. During this time, if the user 
 
 ### A. Landmark-Guided Correction
 
-Instead of trusting GPEN's output geometry blindly, we use a **detect → restore → detect → warp** pipeline:
+Instead of trusting GPEN's output geometry blindly, I use a **detect → restore → detect → warp** pipeline:
 
 1. Detect 22 key facial landmarks (eyes, nose, mouth) on the **original** compressed crop
 2. Run GPEN-256 restoration
@@ -28,9 +28,7 @@ Instead of trusting GPEN's output geometry blindly, we use a **detect → restor
 
 This preserves GPEN's texture enhancement while preventing geometric hallucinations.
 
-### B. Dual-Mode Face Tracking
-
-To decouple expensive detection from per-frame ROI updates, we implement two interchangeable trackers:
+### B. Face Tracking
 
 | Tracker | Method | Latency | Best For |
 |---------|--------|---------|----------|
@@ -41,7 +39,11 @@ Both trackers follow the same pattern:
 - **Detection frames** (every N frames): run Haar cascade, reinitialize tracker state
 - **Tracking frames**: lightweight update to shift ROI, no cascade needed
 
-The Kalman filter provides velocity-based prediction when the tracker momentarily loses the face.
+The key difference: 
+
+- **Kalman** is velocity-based: it maintains a motion model [cx, cy, vx, vy] and can coast on inertia when the target is briefly lost. 
+
+- **Optical Flow** is pixel-based: it tracks actual corner point displacements between frames, with no motion assumption, making it more responsive to fast or erratic movement but unable to predict through occlusion.
 
 ## Pipeline
 

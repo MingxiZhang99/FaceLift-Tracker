@@ -34,7 +34,6 @@ Controls:
   w - cycle restore weight (0.5/0.7/1.0)
   f - cycle detection frequency (1/3/5/10 frames)
   l - toggle landmark correction on/off
-  t - toggle tracker (Kalman+MOSSE / OpticalFlow)
   s - save screenshot
 """
 
