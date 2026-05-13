@@ -110,11 +110,11 @@ python webcam_gpen.py
 
 *Left: Original webcam feed | Center: Compressed at CRF=45 | Right: GPEN-256 restored*
 
-Even though the background remains heavily compressed (CRF=45), the restored face is sharp enough that the overall frame appears nearly indistinguishable from the original — in some cases even perceptually clearer, since GPEN enhances skin texture and edge detail beyond what the raw webcam captures.
+Even though the background remains heavily compressed (CRF=45), the restored face is sharp enough that the overall frame appears nearly indistinguishable from the original, in some cases even perceptually clearer, since GPEN enhances skin texture and edge detail beyond what the raw webcam captures.
 
 ## WebRTC Parameter Experiment
 
-The project also includes a browser-based WebRTC experiment (`webrtc_experiment.html`) for observing how video quality degrades under different network conditions — the exact scenario this restoration pipeline is designed to address.
+The project also includes a browser-based WebRTC experiment (`webrtc_experiment.html`) for observing how video quality degrades under different network conditions.
 
 ![WebRTC Experiment](WEBRTC.png)
 
@@ -128,10 +128,3 @@ This tool lets you adjust parameters in real-time on a local WebRTC peer connect
 By tuning these sliders you can see exactly the kind of compression artifacts that GPEN-256 is designed to restore — blocky skin, lost edge detail, and blurred facial features that appear under bandwidth-constrained video calls.
 
 Open `chrome://webrtc-internals/` alongside the experiment to monitor codec stats, bitrate graphs, and frame drop counts in real-time.
-
-## Architecture Highlights
-
-- **Single-file, zero external service dependencies** — runs entirely offline on CPU
-- **Modular tracker design** — swap between MOSSE and optical flow at runtime
-- **Adaptive landmark correction** — only warps when distortion exceeds threshold, avoiding unnecessary computation on well-behaved frames
-- **Feathered blending** — 12px alpha ramp at ROI borders eliminates hard seams
