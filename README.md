@@ -110,7 +110,7 @@ python webcam_gpen.py
 
 *Left: Original webcam feed | Center: Compressed at CRF=45 | Right: GPEN-256 restored*
 
-Even though the background remains heavily compressed (CRF=45), the restored face is sharp enough that the overall frame appears nearly indistinguishable from the original, in some cases even perceptually clearer, since GPEN enhances skin texture and edge detail beyond what the raw webcam captures.
+Even though the background remains heavily compressed (CRF=45), the restored face is clear enough that the overall frame doesn't feel noticeably blurry, since GPEN enhances skin texture and edge detail beyond what the raw webcam captures, which makes it look a little unnatural.
 
 ## WebRTC Parameter Experiment
 
